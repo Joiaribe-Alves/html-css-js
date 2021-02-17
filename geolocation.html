@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Geolocation with HTML5 and JS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="description" content="Demonstração de uso da API geolocation do HTML5" />
+  <meta name="author" content="Joiaribe g. Alves" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    p {
+      text-align: center;
+      margin: 24px 0;
+    }
+    p.warning {
+      color: red;
+    }
+
+    button {
+      display: block;
+      position: relative;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 200px;
+      padding: 15px;
+      background-color: transparent;
+      color: #333;
+      border: 1px solid #333;
+      border-radius: 5px;
+      outline: none;
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: all .2s;
+    }
+    button:hover {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .mapholder {
+      margin: 0 auto;
+      width: 95%;
+      max-width: 400px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+
+  <p>Click the button to get your geolocation.</p>
+
+  <button onclick="getLocation()">Try It</button>
+
+  <p id="warning" class="warning"></p>
+
+  <div id="mapholder" class="mapholder"></div>
+
+  <script>
+    const warning = document.getElementById("warning");
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else { 
+        warning.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    const mapholder = document.getElementById("mapholder");
+    function showPosition(position) {
+      const latLon = `${position.coords.latitude},${position.coords.longitude}`;
+
+      const img_url = `https://maps.googleapis.com/maps/api/staticmap?center=${latLon}&zoom=14&size=400x300&sensor=false&key=YOUR_KEY`;
+
+      mapholder.innerHTML = `<img src="${img_url}" alt="Map" />`;
+      mapholder.style.border = "1px solid #333";
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          warning.innerText = "User denied the request for Geolocation."
+          break;
+        case error.POSITION_UNAVAILABLE:
+          warning.innerText = "Location information is unavailable."
+          break;
+        case error.TIMEOUT:
+          warning.innerText = "The request to get user location timed out."
+          break;
+        case error.UNKNOWN_ERROR:
+          warning.innerText = "An unknown error occurred."
+          break;
+      }
+    }
+  </script>
+
+</body>
+</html>

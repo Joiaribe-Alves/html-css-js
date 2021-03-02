@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botão Voltar ao Topo</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                'nav'
+                'main'
+                'footer';
+        }
+
+        nav {
+            grid-area: nav;
+            height: 60px;
+            background-color: seagreen;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        main {
+            grid-area: main;
+            background-color: lightcyan;
+            padding: 2rem;
+            min-height: calc(200vh - 60px);
+        }
+
+        footer {
+            grid-area: footer;
+            height: 60px;
+            background-color: seagreen;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+        }
+
+        button {
+            position: fixed;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            right: 2rem;
+            bottom: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0,0,0,.5);
+            color: white;
+            box-shadow: 0 0 3px 1px rgba(0,0,0,.3);
+            border: none;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            transition-duration: .2s;
+        }
+        button:hover {
+            background-color: rgba(0,0,0,.8);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Menu</h1>
+    </nav>
+
+    <main>
+        <h1>Conteúdo</h1>
+    </main>
+
+    <footer>
+        <h1>Footer</h1>
+    </footer>
+
+    <button>&#94;<br/>Topo</button>
+
+    <script>
+        const btnTop = document.querySelector("button");
+
+        window.addEventListener("scroll", () => {
+            if(window.scrollY >= 200) {
+                btnTop.style.display = "flex";
+            } else {
+                btnTop.style.display = "none";
+            }
+        });
+
+        btnTop.addEventListener("click", () => {
+
+            let currentScrollY = scrollY;
+            let gap = 10;
+            const time = 10;
+
+            const toTop = setInterval(() => {
+                if((currentScrollY - gap) < 0) {
+                    currentScrollY = 0;
+                    clearInterval(toTop);
+                } else {
+                    currentScrollY -= gap;
+                }
+                window.scrollTo(0, currentScrollY);
+            }, time);
+
+        });
+    </script>
+</body>
+</html>

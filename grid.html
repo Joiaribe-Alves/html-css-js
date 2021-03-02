@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .menu {
+            height: 150px;
+            background-color: green;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 100px 2fr 1.5fr;
+            gap: 10px;
+            grid-template-areas:
+                'min1 image-large desc-prod'
+                'min2 image-large desc-prod'
+                'min3 image-large desc-prod'
+                'min4 image-large desc-prod';
+            height: 400px;
+            margin: 20px 0;
+            padding: 0 2%;
+        }
+
+        .min {
+            opacity: 0.9;
+            cursor: pointer;
+            transition-duration: .2s;
+        }
+        .min:hover {
+            opacity: 1;
+        }
+
+        .min1 {
+            grid-area: min1;
+        }
+        .min2 {
+            grid-area: min2;
+        }
+        .min3 {
+            grid-area: min3;
+        }
+        .min4 {
+            grid-area: min4;
+        }
+        .image-large {
+            grid-area: image-large;
+        }
+        .desc-prod {
+            grid-area: desc-prod;
+        }
+    </style>
+</head>
+<body>
+    <nav class="menu">Menu</nav>
+
+    <div class="container">
+        <div class="min min1" style="background-color: red;"></div>
+        <div class="min min2" style="background-color: green"></div>
+        <div class="min min3" style="background-color: blue;"></div>
+        <div class="min min4" style="background-color: black;"></div>
+
+        <div class="image-large" style="background-color: yellow;"></div>
+
+        <div class="desc-prod" style="background-color: silver;"></div>
+    </div>
+</body>
+</html>

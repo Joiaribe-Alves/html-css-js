@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Dropdown Responsivo</title>
+
+    <!-- <link rel="stylesheet" href="https://bootstrap"> -->
+
+    <style>
+        /**
+         * Reset
+         */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /** 
+         * Colors
+         */
+        :root {
+            --blue: #1e90ff;
+            --white: #fff;
+            --gray: #e8e8e8;
+            --dark-gray: #222;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark-gray);
+        }
+
+        .top-responsive {
+            display: none;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            background-color: var(--blue);
+
+        }
+
+        .list {
+            display: inherit;
+            align-items: center;
+        }
+
+        .list a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 100px;
+            height: 50px;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 5px;
+            outline: none;
+            transition-duration: .2s;
+        }
+        .list a:hover {
+            background-color: rgba(0,0,0,.3);
+            color: var(--white);
+        }
+
+        /**
+         * Sub-menu
+         */
+        .sublist {
+            position: absolute;
+            background-color: var(--blue);
+            height: 0;
+            overflow: hidden;
+            transition-duration: .2s;
+        }
+        .sublist a {
+            padding: 0 10px;
+            border-top: 2px solid var(--white);
+            border-radius: 0;
+        }
+        .show-sublist {
+            height: 100px;
+        }
+
+        main {
+            height: calc(100vh - 50px);
+            padding: 50px 2.5%;
+        }
+
+        footer {
+            padding: 20px 2.5%;
+            background-color: var(--blue);
+            color: var(--white);
+            text-align: center;
+        }
+
+        /**
+         * Responsive
+         */
+        @media(max-width: 768px) {
+            .top-responsive {
+                position: fixed;
+                display: flex;
+                align-items: center;
+                width: 100vw;
+                height: 50px;
+                padding: 0 1rem;
+                background-color: var(--blue);
+            }
+
+            .btn-menu {
+                width: 40px;
+                height: 40px;
+                border: 1px solid var(--white);
+                border-radius: 5px;
+                background-color: transparent;
+                color: var(--white);
+                font-size: 50px;
+                cursor: pointer;
+                transition-duration: .2s;
+            }
+            .btn-menu:hover {
+                background-color: rgba(0,0,0,.3);
+            }
+
+            .menu {
+                position: fixed;
+                bottom: 0;
+                justify-content: flex-start;
+                align-items: flex-start;
+                width: 50%;
+                max-width: 200px;
+                height: calc(100vh - 50px);
+                border-top: 2px solid white;
+                overflow-y: auto;
+                transition-duration: .2s;
+            }
+
+            .list {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+            .list li {
+                width: 100%;
+            }
+            .list a {
+                justify-content: flex-start;
+                width: 100%;
+                padding-left: 10px;
+                border-bottom: 2px solid var(--white);
+                border-radius: 0;
+            }
+
+            .sublist {
+                position: relative;
+            }
+            .sublist a {
+                border-top: none;
+                border-bottom: 2px solid var(--dark-gray);
+                padding-left: 20px;
+                background-color: var(--white);
+                color: var(--dark-gray);
+            }
+
+            .hide-menu {
+                left: -100%;
+            }
+            .show-menu {
+                left: 0;
+            }
+
+            main {
+                padding: 100px 2.5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-responsive"><button class="btn-menu"></button></header>
+    <nav class="menu hide-menu">
+        <ul class="list">
+            <li><a href="#" title="Página Inicial">Início</a></li>
+            <li><a href="#" title="Nossos Serviços" class="dropdown">Serviços</a>
+                <ul class="sublist">
+                    <li><a href="#" title="Serviço 1">Serviço 1</a></li>
+                    <li><a href="#" title="Serviço 2">Serviço 2</a></li>
+                </ul>
+            </li>
+            <li><a href="#" title="Sobre Nós">Sobre</a></li>
+            <li><a href="#" title="Entre em Contato">Contato</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        Content
+    </main>
+
+    <footer>
+        Footer
+    </footer>
+
+    <script>
+        /**
+         *Responsive menu
+         */
+        const btnMenu = document.querySelector(".btn-menu");
+        const menu = document.querySelector(".menu");
+
+        btnMenu.addEventListener("click", () => {
+            if(menu.classList.contains("hide-menu")) {
+                menu.classList.remove("hide-menu");
+                menu.classList.add("show-menu");
+            } else {
+                menu.classList.add("hide-menu");
+                menu.classList.remove("show-menu");
+            }
+        });
+
+        /**
+         * Sub-menu
+         */
+        const dropdown = document.querySelector(".dropdown");
+        const sublist = document.querySelector(".sublist");
+
+        // Show sub-menu
+        dropdown.addEventListener("mouseenter", () => {
+            sublist.classList.toggle("show-sublist")
+        });
+        sublist.addEventListener("mouseleave", () => {
+            sublist.classList.toggle("show-sublist")
+        });
+    </script>
+</body>
+</html>

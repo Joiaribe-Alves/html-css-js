@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Grid Layout</title>
 
     <style>
         * {
@@ -15,46 +15,67 @@
         .menu {
             height: 150px;
             background-color: green;
+            color: white;
+            text-align: center;
+            line-height: 150px;
         }
 
-        .container {
+        .grid-container {
             display: grid;
             grid-template-columns: 100px 2fr 1.5fr;
             gap: 10px;
             grid-template-areas:
-                'min1 image-large desc-prod'
-                'min2 image-large desc-prod'
-                'min3 image-large desc-prod'
-                'min4 image-large desc-prod';
-            height: 400px;
+                'min1 zoomer desc-prod'
+                'min2 zoomer desc-prod'
+                'min3 zoomer desc-prod'
+                'min4 zoomer desc-prod';
             margin: 20px 0;
             padding: 0 2%;
         }
 
-        .min {
+        .mini {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100px;
             opacity: 0.9;
             cursor: pointer;
             transition-duration: .2s;
         }
-        .min:hover {
+        .mini:hover {
             opacity: 1;
         }
 
         .min1 {
             grid-area: min1;
+            background-image: url("img1.jpg");
         }
         .min2 {
             grid-area: min2;
+            background-image: url("img2.jpg");
         }
         .min3 {
             grid-area: min3;
+            background-image: url("img3.jpg");
         }
         .min4 {
             grid-area: min4;
+            background-image: url("img4.jpg");
         }
-        .image-large {
-            grid-area: image-large;
+
+        .zoomer {
+            grid-area: zoomer;
+            background-image: url("image-large1.jpg");
+            background-position: center;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            transition-duration: .1s;
         }
+        .zoomer:hover {
+            background-size: 125%;
+            cursor: crosshair;
+        }
+
         .desc-prod {
             grid-area: desc-prod;
         }
@@ -63,15 +84,31 @@
 <body>
     <nav class="menu">Menu</nav>
 
-    <div class="container">
-        <div class="min min1" style="background-color: red;"></div>
-        <div class="min min2" style="background-color: green"></div>
-        <div class="min min3" style="background-color: blue;"></div>
-        <div class="min min4" style="background-color: black;"></div>
+    <div class="grid-container">
+        <div class="mini min1"></div>
+        <div class="mini min2"></div>
+        <div class="mini min3"></div>
+        <div class="mini min4"></div>
 
-        <div class="image-large" style="background-color: yellow;"></div>
+        <div class="zoomer"></div>
 
         <div class="desc-prod" style="background-color: silver;"></div>
     </div>
+
+    <script>
+        const zoomer = document.querySelector(".zoomer")
+
+        zoomer.addEventListener("mousemove", e => {
+            let width = e.offsetWidth;
+            let height = e.offsetHeight;
+            let mouseX = e.offsetX;
+            let mouseY = e.offsetY;
+
+            let bgPosX = (mouseX / width * 100)
+            let bgPosY = (mouseY / height * 100)
+
+            zoomer.style.backgroundPosition = `${bgPosX} ${bgPosY}`
+        })
+    </script>
 </body>
 </html>

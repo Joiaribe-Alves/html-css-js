@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Código de Barras com JS</title>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			outline: none;
+		}
+
+		input,
+		.result {
+			padding: 10px;
+			font-size: 1.2em;
+			border: 1px solid #2aa;
+			border-radius: 5px;
+		}
+
+		header {
+			padding: 1rem;
+			background-color: #2aa;
+			color: #eee;
+			text-align: center;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		.content {
+			position: relative;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-areas: "txt-input format" "btn-generate btn-generate" "result result";
+			gap: 1rem;
+			margin: 2rem auto;
+			width: 50%;
+			max-width: 600px;
+			padding: 1rem;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 2px rgba(0,0,0,.2);
+		}
+
+		#txt-input {
+			grid-area: txt-input;
+		}
+
+		.format {
+			grid-area: format;
+			background-color: transparent;
+			border: 1px solid #2aa;
+			border-radius: 5px;
+			padding: 10px;
+			font-size: 1.2em;
+		}
+
+		#btn-generate {
+			grid-area: btn-generate;
+			background-color: #2aa;
+			color: #eee;
+			border-radius: 5px;
+			cursor: pointer;
+			transition-duration: .2s;
+		}
+		#btn-generate:hover {
+			background-color: #4bb;
+		}
+
+		.result {
+			grid-area: result;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 200px;
+		}
+		.result .warning {
+			color: #a22;
+		}
+	</style>
+</head>
+<body>
+	<header>Gerador de código de barras com Javascript</header>
+	
+	<div class="content">
+		<input type="text" id="input-value" placeholder="123456">
+
+		<select id="format" class="format">
+			<option value="null" selected="selected">Selecione o formato</option>
+			<option value="code128">Code 128</option>
+			<option value="code39">CODE-39</option>
+			<optgroup label="EAN">
+				<option value="ean2">EAN-2</option>
+				<option value="ean5">EAN-5</option>
+				<option value="ean8">EAN-8</option>
+				<option value="ean13">EAN-13</option>
+			</optgroup>
+			<option value="upc">UPC</option>
+			<option value="itf">ITF</option>
+			<option value="itf14">ITF-14</option>
+			<option value="msi">MSI</option>
+			<option value="pharmacode">Pharmacode</option>
+		</select>
+
+		<input type="button" id="btn-generate" value="Gerar código">
+		
+		<div class="result">
+			<svg id="barcode"></svg>
+		</div>
+	</div>
+	
+
+	
+	<!--
+		JS
+	-->
+	<!--<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.3/dist/JsBarcode.all.min.js"></script>-->
+	<script src="JsBarcode.all.min.js"></script>
+
+	<script>
+		const result = document.querySelector(".result");
+		const btnGenerate = document.getElementById("btn-generate");
+		btnGenerate.addEventListener("click", () => {
+			const inputValue = document.getElementById("input-value").value;
+			const format = document.getElementById("format").value;
+			
+			if(format == "null") {
+				result.innerHTML = "<h2 class=\"warning\">Por favor, selecione um formato válido!</h2>"
+			} else {
+				JsBarcode("#barcode", inputValue, {
+				  format: format,
+				  lineColor: "#222",
+				  width: 2,
+				  height: 40,
+				  displayValue: true
+				});
+			}
+		});
+	</script>
+</body>
+</html>

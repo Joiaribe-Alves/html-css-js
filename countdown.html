@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Temporizador</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="author" content="Joiaribe G. Alves"/>
+	
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background-color: #222;
+			color: #fff;
+			font-family: sans-serif;
+			font-size: 100%;
+		}
+
+		.menu {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 50px;
+			border-bottom: 1px solid #000;
+		}
+		.menu a {
+			display: inline-block;
+			padding: .5rem 1rem;
+			color: #fff;
+			text-decoration: none;
+			font-size: 1.1em;
+			border: 1px solid #111;
+			border-radius: 5px;
+			transition: all .3s;
+		}
+		.menu a:hover {
+			border-color: #fff;
+		}
+
+		.container {
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 450px;
+			height: 150px;
+			/*padding: 1rem 2rem;*/
+			border: 1px solid #000;
+			border-radius: 10px;
+			font-size: 7em;
+		}
+
+		.config {
+			width: 200px;
+			border: 1px solid #000;
+			border-radius: 5px;
+			margin: 10px 10px auto auto;
+			padding:  .25rem .5rem;
+		}
+		.config input {
+			width: 100%;
+			margin: .25rem 0;
+			padding: .5rem;
+			background-color: transparent;
+			color: #fff;
+			font-size: 1.1em;
+			border: 1px solid #111;
+			border-radius: 5px;
+			outline: none;
+			cursor: pointer;
+			transition: all .3s;
+		}
+		.config input:hover {
+			border-color: #fff;
+		}
+
+		.end-time {
+			animation: end 2s linear infinite ;
+		}
+		@keyframes end {
+			50% {
+				opacity: .1;
+			}
+			100% {
+				opacity: 1;
+			}
+		}
+	</style>
+</head>
+<body>
+	<nav class="menu">
+		<div>
+			<a href="relogio.html">Relógio</a>
+			<a href="cronometro.html">Cronômetro</a>
+			<a href="#">Temporizador</a>
+		</div>
+	</nav>
+	<div class="config">
+		<label for="hours">Dia:</label>
+		<input type="number" id="day" min="1" max="31"/>
+		
+		<label for="hours">Mês:</label>
+		<input type="number" id="month" min="1" max="12"/>
+		
+		<label for="hours">Ano:</label>
+		<input type="number" id="year" max="2099"/>
+
+		<label for="hours">Horas:</label>
+		<input type="number" id="hours" placeholder="Horas" min="0" max="23"/>
+
+		<label for="minutes">Minutos:</label>
+		<input type="number" id="minutes" placeholder="Minutos" min="0" max="59"/>
+
+		<!--
+		<input type="button" value="Definir">
+		<p>Cor da fonte<br/>
+			<input type="color" name="" id="color">
+		</p>
+		-->
+		
+	</div>
+	<div class="container" id="container">
+
+		<p id="demo"></p>
+	</div>
+
+	<script>
+		const inputYear = document.getElementById("year");
+		const inputMonth = document.getElementById("month");
+		const inputDay = document.getElementById("day");
+		
+		window.addEventListener("load", () => {
+			inputDay.setAttribute("placeholder", `${date.getDay() + 1}`);
+			inputMonth.setAttribute("placeholder", `${date.getMonth() + 1}`);
+			inputYear.setAttribute("placeholder", `${date.getFullYear()}`);
+			inputYear.setAttribute("min", `${date.getFullYear()}`);
+		});
+
+		// validação das entradas
+		inputDay.addEventListener("keyup", () => {
+			if(inputDay.value.length > 2) {
+				inputDay.value = "";
+			} else if(inputDay.value < 1 || inputDay.value > 31) {
+				inputDay.value = "";
+				inputDay.style.border = "1px solid red";
+			} else {
+				inputDay.style.border = "1px solid #111";
+			}
+		});
+		inputMonth.addEventListener("keyup", () => {
+			if(inputMonth.value.length > 2) {
+				inputMonth.value = "";
+			} else if(inputMonth.value < 1 || inputMonth.value > 12) {
+				inputMonth.value = "";
+				inputMonth.style.border = "1px solid red";
+			} else {
+				inputMonth.style.border = "1px solid #111";
+			}
+		});
+		inputYear.addEventListener("keyup", () => {
+			if(inputYear.value.length > 4) {
+				inputYear.value = "";
+			} else if(inputYear.value > 2099) {
+				inputYear.value = "";
+				inputYear.style.border = "1px solid red";
+			} else {
+				inputYear.style.border = "1px solid #111";
+			}
+		});
+		inputYear.addEventListener("blur", () => {
+			if(inputYear.value < date.getFullYear()) {
+				inputYear.value = "";
+				inputYear.style.border = "1px solid red";
+			} else {
+				inputYear.style.border = "1px solid #111";
+			}
+		});
+		
+
+		// Set the date we're counting down to
+		let date = new Date();
+		let year = date.getFullYear();
+		let month = "Nov";
+		let day = date.getDay() + 1;
+		let hou = document.getElementById("hours").value;
+		let min = document.getElementById("minutes").value;
+		let sec = 0;
+		let countDownDate = new Date(`${month} ${day}, ${year} ${hou}:${min}:${sec}`).getTime();
+
+		// Update the count down every 1 second
+		let x = setInterval(function() {
+			// Get today's date and time
+			let now = new Date().getTime();
+
+			// Find the distance between now and the count down date
+			let distance = countDownDate - now;
+
+			// Time calculations for days, hours, minutes and seconds
+			// let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+			if(hours < 10) {
+				hours = `0${hours}`;
+			}
+			if(minutes < 10) {
+				minutes = `0${minutes}`;
+			}
+			if(seconds < 10) {
+				seconds = `0${seconds}`;
+			}
+
+			// Output the result in an element with id="demo"
+			document.getElementById("demo").innerHTML = `${hours}:${minutes}:${seconds}`;
+
+			// If the count down is over, write some text
+			if(distance < 0) {
+				clearInterval(x);
+				document.getElementById("demo").innerHTML = `00:00:00`;
+				document.getElementById("demo").classList.add("end-time");
+			}
+		}, 1000);
+	</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Cronômetro</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="author" content="Joiaribe G. Alves"/>
+	
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background-color: #222;
+			color: #fff;
+			font-family: sans-serif;
+			font-size: 100%;
+		}
+
+		.menu {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 50px;
+			border-bottom: 1px solid #000;
+		}
+		.menu a {
+			display: inline-block;
+			padding: .5rem 1rem;
+			color: #fff;
+			text-decoration: none;
+			font-size: 1.1em;
+			border: 1px solid #111;
+			border-radius: 5px;
+			transition: all .3s;
+		}
+		.menu a:hover {
+			border-color: #fff;
+		}
+
+		.container {
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 500px;
+			height: 150px;
+			border: 1px solid #000;
+			border-radius: 10px;
+			font-size: 7em;
+		}
+
+		.config {
+			width: 200px;
+			border: 1px solid #000;
+			border-radius: 5px;
+			margin: 10px 10px auto auto;
+			padding:  .25rem .5rem;
+		}
+		.config input {
+			width: 100%;
+			margin: .25rem 0;
+			padding: .5rem;
+			background-color: transparent;
+			color: #fff;
+			font-size: 1.1em;
+			border: 1px solid #111;
+			border-radius: 5px;
+			outline: none;
+			cursor: pointer;
+			transition: all .3s;
+		}
+		.config input:hover {
+			border-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<nav class="menu">
+		<div>
+			<a href="relogio.html">Relógio</a>
+			<a href="#">Cronômetro</a>
+			<a href="countdown.html">Temporizador</a>
+		</div>
+	</nav>
+
+	<div class="config">
+		<input type="button" value="Iniciar" id="start" title="Inicia a contagem" />
+		<input type="button" value="Pausar" id="pause" title="Pausa a contagem" />
+		<input type="button" value="Continuar" id="continue" title="Continua a contagem" />
+		<input type="button" value="Reiniciar" id="reset" title="Zera a contagem" />
+	</div>
+
+	<div class="container" id="container">
+		<div id="hour">00</div>
+		<div class="dotted">:</div>
+		<div id="minute">00</div>
+		<div class="dotted">:</div>
+		<div id="second">00</div>
+	</div>
+
+	<script>
+		const seg = document.getElementById("second");
+		const min = document.getElementById("minute");
+		const hou = document.getElementById("hour");
+		let s = 0; // seconds
+		let m = 0; // minutes
+		let h = 0; // hours
+		
+		function cronometro() {
+			if(s < 60) {
+				s += 1;
+			}
+			if(s == 60) {
+				s = 0;
+				seg.innerText = s;
+				m += 1;
+				min.innerText = m;
+			}
+
+			if(m > 59) {
+				m = 0;
+				h += 1;
+			}
+
+			// concatena o zero na frente dos segundos
+			if(s < 10) {
+				seg.innerText = `0${s}`;
+			} else {
+				seg.innerText = s;
+			}
+			// concatena o zero na frente dos minutos
+			if(m < 10) {
+				min.innerText = `0${m}`;
+			} else {
+				min.innerText = m;
+			}
+			// concatena o zero na frente das horas
+			if(h < 10) {
+				hou.innerText = `0${h}`;
+			} else {
+				hou.innerText = h;
+			}
+		}
+		
+		let cro = "";
+		// inicia a cronômetro
+		const start = document.getElementById("start");
+		start.addEventListener("click", () => {
+			cro = setInterval(cronometro, 1000);
+		});
+		
+		// pausa o cronômetro
+		const pause = document.getElementById("pause");
+		pause.addEventListener("click", () => {
+			clearInterval(cro);
+		});
+
+		// continua o cronômetro
+		const cont = document.getElementById("continue");
+		cont.addEventListener("click", () => {
+			cro = setInterval(cronometro, 1000);
+		});
+		
+		// zera o cronômetro
+		const reset = document.getElementById("reset");
+		reset.addEventListener("click", () => {
+			s = 0;
+			m = 0;
+			h = 0;
+			seg.innerText = "00";
+			min.innerText = "00";
+			hou.innerText = "00";
+			clearInterval(cro);
+		});
+	</script>
+</body>
+</html>

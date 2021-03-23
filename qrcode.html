@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>QR Code com JS</title>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			outline: none;
+		}
+
+		input,
+		.result {
+			padding: 10px;
+			font-size: 1.2em;
+			border: 1px solid #2aa;
+			border-radius: 5px;
+		}
+
+		header {
+			padding: 1rem;
+			background-color: #2aa;
+			color: #eee;
+			text-align: center;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		.qr-container {
+			position: relative;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-areas: "txt-input btn-generate" "result result";
+			gap: 1rem;
+			margin: 2rem auto;
+			width: 50%;
+			max-width: 600px;
+			padding: 1rem;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 2px rgba(0,0,0,.2);
+		}
+
+		.input-data {
+			grid-area: txt-input;
+		}
+
+
+		.btn-generate {
+			grid-area: btn-generate;
+			background-color: #2aa;
+			color: #eee;
+			border-radius: 5px;
+			cursor: pointer;
+			transition-duration: .2s;
+		}
+		.btn-generate:hover {
+			background-color: #4bb;
+		}
+
+		.result {
+			grid-area: result;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			height: 200px;
+		}
+	</style>
+</head>
+<body>
+	<header>Gerador de QR Code com Javascript</header>
+	
+	<div class="qr-container">
+		<!-- <input type="text" class="input-data" placeholder="https://"> -->
+		<input type="url" class="input-data" placeholder="https://" autofocus="autofocus" />
+
+		<input type="button" class="btn-generate" value="Gerar código" />
+		
+		<div id="qrcode" class="result">
+			
+		</div>
+	</div>
+
+	<!--
+		JS
+	-->
+	<script src="qrcode.min.js"></script>
+	<script>
+		const inputData = document.querySelector(".input-data");
+		const btnGenerate = document.querySelector(".btn-generate");
+		const result = document.querySelector(".result");
+		const qrcode = new QRCode(result, {
+			width : 180,
+			height : 180
+		});
+
+		function QRCGenerate() {
+			if (!inputData.value) {
+				alert("Por favor, escreva algo no campo!");
+				inputData.focus();
+				return;
+			}
+
+			qrcode.makeCode(inputData.value);
+		}
+
+		btnGenerate.addEventListener("click", () => {
+			QRCGenerate();
+		});
+
+		inputData.addEventListener("keyup", e => {
+			if(e.keyCode == 13) {
+				QRCGenerate();
+			}
+		});
+	</script>
+</body>
+</html>

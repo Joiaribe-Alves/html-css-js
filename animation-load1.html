@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>Load 1</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Joiaribe G. Alves">
+	<meta name="description" content="Demonstração do uso de animações do CSS para fazer spiner de load">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		header {
+			padding: 1rem;
+			background-color: #2aa;
+			color: #eee;
+			text-align: center;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		.content {
+			display: flex;
+			justify-content: center;
+			margin: 2rem auto;
+			width: 90vw;
+			max-width: 600px;
+			padding: 1rem;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 2px rgba(0,0,0,.2);
+		}
+
+		.load {
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			font-size: 1.2rem;
+		}
+		.spiner {
+			width: 70px;
+			height: 70px;
+			margin-bottom: 5px;
+			border: 7px solid #4cc;
+			border-left: 7px solid #2aa;
+			border-radius: 50%;
+			animation: rotation 2s infinite linear;
+		}
+		@keyframes rotation {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>Animação de Load com CSS #01</header>
+
+	<div class="content">
+		<div class="load">
+			<span class="spiner"></span>
+			<span class="text-load">Aguarde...</span>
+		</div>
+	</div>
+</body>
+</html>

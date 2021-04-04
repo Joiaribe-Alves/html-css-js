@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<title>Load 2</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Joiaribe G. Alves">
+	<meta name="description" content="Demonstração do uso de animações do CSS para fazer spiner de load">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		header {
+			padding: 1rem;
+			background-color: #2aa;
+			color: #eee;
+			text-align: center;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		.content {
+			display: flex;
+			justify-content: center;
+			margin: 2rem auto;
+			width: 90vw;
+			max-width: 600px;
+			padding: 1rem;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 2px rgba(0,0,0,.2);
+		}
+
+		.teste {
+			position: relative;
+			width: 150px;
+			height: 150px;
+			border: 8px solid salmon;
+			/*border-radius: 50%;*/
+			animation: rotation1 4s infinite linear;
+		}
+		@keyframes rotation {
+			to {
+				transform: rotateZ(360deg);
+			}
+		}
+
+		.teste::before {
+			content: "";
+			position: absolute;
+			top: -8px;
+			left: -8px;
+			width: 0;
+			height: 8px;
+			border-radius: 10px;
+			background: linear-gradient(to right, rgb(83,105,118), rgb(41,46,73) );
+			animation: teste 4s infinite linear;
+		}
+		@keyframes teste {
+			50% {
+				width: calc(100% + 16px);
+			}
+			51% {
+				transform: rotateZ(360deg);
+			}
+			100% {
+				/*width: 0;*/
+				/*transform: rotateZ(360deg);*/
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>Animação de Load com CSS #01</header>
+
+	<div class="content">
+		<div class="teste"></div>
+	</div>
+</body>
+</html>

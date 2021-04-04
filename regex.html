@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Regex</title>
+</head>
+<body>
+
+	<input type="text" placeholder="Valor..." />
+
+	<script>
+		const value = document.getElementsByTagName('input');
+		const res = value.match(/\<script\>([\s\S]*)\<\/script\>/);
+		// const regex = value.match(/[(a-zA-Z)]/);
+
+		value.addEventListener("keyup", (e) => {
+			if (regex) {
+				e.target.style.border = "2px solid red";
+			}
+		})
+	</script>
+	
+</body>
+</html>

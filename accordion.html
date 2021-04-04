@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>QR Code com JS</title>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			outline: none;
+		}
+
+		header {
+			padding: 1rem;
+			background: linear-gradient(to right, #07A7E3, #32DAC3);
+			color: #eee;
+			text-align: center;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		.container {
+			width: 90vw;
+			max-width: 600px;
+			margin: 2rem auto;
+			padding: 1rem;
+			color: #111;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 2px rgba(0,0,0,.2);
+		}
+
+		.accordion {
+			border: 1px solid #eee;
+			margin-bottom: 1rem;
+			border-radius: 5px;
+		}
+		.accordion:last-child {
+			margin-bottom: 0;
+		}
+		.accordion-header {
+			padding: .5rem;
+			background-color: #eee;
+			border-bottom: 1px solid #eee;
+			cursor: pointer;
+		}
+		.accordion-body {
+			padding: .5rem;
+			font-size: 1.2rem;
+			transition-duration: .2s;
+			overflow: hidden;
+		}
+		.hide-accordion-body {
+			height: 0;
+			/* opacity: 0; */
+			padding: 0 .5rem;
+		}
+	</style>
+</head>
+<body>
+	<header>Efeito de um Acordeon</header>
+	
+	<div class="container">
+		<div class="accordion">
+			<div class="accordion-header">
+				<h2>Lorem Ipsum?</h2>
+			</div>
+			<div class="accordion-body hide-accordion-body">
+				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum, quos!
+			</div>
+		</div>
+
+		<div class="accordion">
+			<div class="accordion-header">
+				<h2>Lorem Ipsum?</h2>
+			</div>
+			<div class="accordion-body hide-accordion-body">
+				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id molestiae temporibus distinctio possimus? Cum, minima.
+			</div>
+		</div>
+
+		<div class="accordion">
+			<div class="accordion-header">
+				<h2>Lorem Ipsum?</h2>
+			</div>
+			<div class="accordion-body hide-accordion-body">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae aperiam facere rerum ab qui nostrum fuga. Libero porro exercitationem neque!
+			</div>
+		</div>
+
+		<div class="accordion">
+			<div class="accordion-header">
+				<h2>Lorem Ipsum?</h2>
+			</div>
+			<div class="accordion-body hide-accordion-body">
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione quos laudantium eos est, ducimus ab doloremque distinctio, quae voluptatem nam natus fuga autem magni dolores.
+			</div>
+		</div>
+	</div>
+
+	<!--
+		JS
+	-->
+	<script>
+		const accordionHeader = document.querySelectorAll(".accordion-header");
+		const accordionBody = document.querySelectorAll(".accordion-body");
+
+		for(let i = 0; i < accordionHeader.length; i++) {
+			accordionHeader[i].addEventListener("click", () => {
+				// accordionBody.forEach(e => e.classList.add("hide-accordion-body"));
+				// accordionBody[i].classList.remove("hide-accordion-body");
+
+				accordionBody.forEach(e => {
+					if(e.classList.contains("hide-accordion-body")) {
+						accordionBody[i].classList.remove("hide-accordion-body");
+					}
+				});
+				accordionBody[i].classList.toggle("hide-accordion-body");
+			});
+		}
+	</script>
+</body>
+</html>
